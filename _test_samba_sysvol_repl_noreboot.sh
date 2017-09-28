@@ -140,6 +140,10 @@ else
    (find /var/lib/samba/sysvol | xargs -L 1 -I % touch %) & spinner $!
    checksoft set current time on sysvol
    sleep 1
+   #// clean up TMP files
+   (find /var/lib/samba/sysvol -type f -name "*.tmp" -exec rm -fv {} \;) & spinner $!
+   checksoft clean up TMP files on sysvol
+   sleep 1
    #// samba-tool ntacl sysvolreset
    echo "prepare: samba-tool ntacl sysvolreset"
    (samba-tool ntacl sysvolreset) & spinner $!
